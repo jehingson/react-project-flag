@@ -12,11 +12,25 @@ const CountryListStyled = styled.div`
   padding: 4em 2em;
 `
 function CountryList() {
-  const dispatch = useDispatch()
-  const countryList = useSelector((state) => state.countryList)
-  console.log('el estado total de mi app es', countryList)
 
-  //const [countryList, setconuntryList] = useState([]);
+  const [inputValue, setInputValue] = useState('')
+  const dispatch = useDispatch()
+  const countryListByName = useSelector((state) => state.countryListByName)
+
+  const countryList = useSelector((state) => {
+    if ('' !== state.filterByRegion) {
+      return state.coutryFilteredByRegion;
+    }
+
+    if (countryListByName.length > 0) {
+      return countryListByName
+    }
+
+    return state.countryList;
+  })
+
+
+  console.log('el estado de mi app es,', countryList)
 
   useEffect(() => {
     async function fetchData() {
@@ -29,11 +43,40 @@ function CountryList() {
       console.log(data.length)
     }
     fetchData();
-  }, [])
+  }, [dispatch])
+
+  const filterByName = (e) =>{
+    setInputValue(e.target.value)
+    dispatch({
+      type: 'SET_COUNTRY_BY_NAME',
+      payload: e.target.value
+    })
+  }
+  const clearInput = () => {
+    dispatch({
+      type: 'SET_COUNTRY_BY_NAME',
+      payload: ''
+    })
+    setInputValue('')
+  }
+
+  
   return (
     <CountryListStyled>
+
+      <input type="text" valur={inputValue} onChange={filterByName} />
       {
-        countryList.map(({ name, flag, population, region, capital }) => {
+        inputValue && 
+        <button onClick={clearInput} > x </button>
+      }
+      {
+        countryListByName.length === 0 && inputValue && 
+        <p>
+          <strong>{inputValue}</strong> No se encuentra el país
+        </p>
+      }
+      {
+          countryList.map(({ name, flag, population, region, capital }) => {
           return (
             <Country
               flag={flag}
