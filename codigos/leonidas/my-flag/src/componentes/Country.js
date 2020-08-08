@@ -40,7 +40,7 @@ function Country({
 
   return (
     <CountryStyled>
-      <img loading="lazy" src={flag} />
+      <img loading="lazy" src={flag} alt="" />
       <div className="datails">
         <h2>{name}</h2>
         <p><strong>Population:</strong> {population}</p>
