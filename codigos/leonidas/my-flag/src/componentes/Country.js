@@ -1,5 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import {
+  useHistory,
+  useLocation,
+  } from "react-router-dom";
 
 
 const CountryStyled = styled.div`
@@ -38,12 +42,18 @@ function Country({
   capital
 }) {
 
+  const history = useHistory()
+
+  function handleClick() {
+    history.push(`/country/${name}`)
+  }
+
   return (
-    <CountryStyled>
+    <CountryStyled onClick={handleClick}>
       <img loading="lazy" src={flag} alt="" />
       <div className="datails">
         <h2>{name}</h2>
-        <p><strong>Population:</strong> {population}</p>
+        <p><strong>Población:</strong> {population}</p>
         <p><strong>Region:</strong> {region}</p>
         <p><strong>Capital:</strong> {capital}</p>
       </div>

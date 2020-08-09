@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Wrapper from './wrapper'
+import {Link} from 'react-router-dom'
 
 const HeaderStyled = styled.div`
 background: var(--white);
@@ -36,8 +37,10 @@ function Header() {
   return (
     <HeaderStyled>
       <Wrapper>
-      <div className="content">
-        <h1>Mundo Países</h1>
+        <div className="content">
+          <Link to="/">
+          <h1>Donde estas Países</h1>
+          </Link>
           <div className="dark-mode">
           <p onClick={handleClick}>
             <span className="moon">
