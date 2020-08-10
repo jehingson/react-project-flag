@@ -1,25 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  useHistory,
-  useLocation,
-  } from "react-router-dom";
+  useHistory
+} from "react-router-dom";
+import slugify from 'slugify';
 
 
 const CountryStyled = styled.div`
-  width: 264px;
   text-align: left;
   border-radius: 5px;
+  cursor: pointer;
   margin: 1em;
   overflow: hidden;
   box-shadow: 0 0 7px 2px rgba(0, 0, 0, .09);
+  &:hover .datails{
+    border: 1px solid var(--black);
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+  }
   img{
     width: 100%;
     height: 160px;
     object-fit: cover;
+    vertical-align: top;
+    border-radius: 5px 5px 0 0;
   }
   .datails{
     padding: 1.5em;
+    border: 1px solid transparent;
+    border-top: none;
+    transition: .3s border;
+    background: var(--white);
   }
   h2{
     margin: 0;
@@ -39,13 +50,17 @@ function Country({
   name,
   population,
   region,
-  capital
+  capital,
+  alpha2Code,
 }) {
 
   const history = useHistory()
 
   function handleClick() {
-    history.push(`/country/${name}`)
+
+    console.log( 'que' , alpha2Code, name)
+    history.push(`/country/${alpha2Code}`)
+    
   }
 
   return (

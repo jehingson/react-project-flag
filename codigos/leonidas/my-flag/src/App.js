@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import CountryList from './componentes/Country-list';
@@ -21,18 +21,36 @@ const initialState = {
   filterByRegion: '',
 }
 
-
-
-
 const store = createStore(reducer, initialState)
 
 
 function App() {
+
+    const [darkMode, setDarkMode] = useState(false)
+    const [checked, setChecked] = useState(false)
+    const mainClass = darkMode ? 'is-dark-mode' : 'is-light-mode'
+  console.log(checked);
+    function changeMedia(mq) {
+      setDarkMode(mq.matches)
+      setChecked(mq.matches)
+    }
+  
+    useEffect(() => {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      mq.addListener(changeMedia)
+      setDarkMode(mq.matches)
+      setChecked(mq.matches)
+      return () => {
+        mq.removeListener(changeMedia)
+      }
+    }, [])
+
+
   return (
+    <main className={mainClass}>
     <Provider store={store}>
-      
       <Router>
-        <Header />
+        <Header setDarkMode={setDarkMode} darkMode={darkMode} />
         <Switch>
         <Route path="/country/:id" component={Countrypage} />
         <Route path="/">
@@ -41,7 +59,8 @@ function App() {
         </Route>
         </Switch>
       </Router>
-    </Provider>
+      </Provider>
+      </main>
   );
 }
 

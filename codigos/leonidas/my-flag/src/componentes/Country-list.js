@@ -7,12 +7,15 @@ import { useSelector, useDispatch } from "react-redux";
 const CountryListStyled = styled.div`
   display: grid;
   grid-row-gap: 2.3em;
-  //grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-flow: columns;
+  grid-columns-gap: 80px;
+  grid-template-columns: repeat(auto-fill, minmax(0, 264px));
   background: var(--background);
   justify-content: center;
-  padding: 4em 2em;
+  padding: 3em 2em;
   box-sizing: border-box;
-  
+  max-width: 1280px;
+  margin: auto;
 `
 function CountryList() {
 
@@ -46,14 +49,11 @@ function CountryList() {
     }
     fetchData();
   }, [dispatch])
-
-
-  
+ 
   return (
     <CountryListStyled>
-       
       {
-          countryList.map(({ name, flag, population, region, capital }) => {
+          countryList.map(({ name, flag, population, region, capital, alpha2Code }) => {
           return (
             <Country
               flag={flag}
@@ -61,7 +61,9 @@ function CountryList() {
               key={name}
               population={population}
               region={region}
-              capital={capital} />
+              capital={capital}
+              alpha2Code={alpha2Code}
+            />
           )
         })
       }

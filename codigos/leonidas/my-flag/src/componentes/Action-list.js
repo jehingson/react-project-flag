@@ -5,13 +5,21 @@ import { Region as FilterByRegion } from "./Region"
 
 
 const ActionListStyled = styled.div`
-max-width: 1280px;
+max-width: 1282px;
 margin: auto;
 padding: 0 1rem;
   .grid{
     display: grid;
     grid-template-columns: 1fr;
-    grid-row-gap: 40px;
+    grid-row-gap: 20px;
+    max-width: 1037px;
+    margin: auto;
+  }
+  @media screen and (min-width: 768px){
+    .grid{
+      grid-template-columns: 480px 1fr 200px;
+
+    }
   }
 `
 
@@ -19,7 +27,8 @@ function ActionList() {
   return (
     <ActionListStyled>
         <div className="grid">
-          <Buscar />
+        <Buscar />
+        <span></span>
           <FilterByRegion />
         </div>
      
